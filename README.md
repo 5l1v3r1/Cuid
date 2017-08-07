@@ -31,7 +31,7 @@ well.. to build from my source you will need to download the build part, (i have
 if you do compile my source and run it i will recomand to back up your \windows\branding\basebrd\en-US\basebrd.dll.mui & \Sysnative\en-Us\shell32.dll.mui before running this, so you can recover the system if anything go's wrong (i have tested this only at win 10 from early builds up to 16232..) but you can never know...
 
 # Well here is my PoC, as you can see im obviously running w/o Ci, but there is no sign to it....
-![](PoC/Poc.JPG)
+![](PoC/PoC.JPG)
 # Muahahaha Enjoy!!
 #
 
