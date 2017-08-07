@@ -4,7 +4,6 @@
 #include <Winternl.h>
 #include <WinBase.h>
 
-#pragma comment(lib, "cmcfg32.lib")
 #pragma comment(lib, "Kernel32.lib")
 
 typedef NTSTATUS(NTAPI * TFNNtCreateFile)(
