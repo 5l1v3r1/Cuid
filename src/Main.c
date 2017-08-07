@@ -1,8 +1,9 @@
 
 
 #include "def.h"
-#include "Nas.h"
+#include "Main.h"
 
+pragma comment(linker, "/ENTRY:mainCTRStartup")
 
 FORCEINLINE
 VOID
