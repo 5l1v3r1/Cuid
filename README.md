@@ -6,7 +6,7 @@ mui files are are application extentions, that serve's as a local data base for 
 despite the fact that those are not executable files they, at a big extent influance existing application's activety.<br> 
 One biggie for any spyware/adware is avoiding detection, while any respectfull rootkit would operate from ring 0, To hide its existance at an infected machine.<br> 
 it is very well common for rootkits & Rats to change Critical Structures at NtosKrnl for hiding one existance from the user operating the target machine.<br> 
-# and in this Repo i would concentrate at disabling Ci, while hiding that from the user, but the extent of changing mui files to "customize" the Ui, can go much further (and would not requere the machine to be 'safeboot disabled') as this poc do.
+ and in this Repo i would concentrate at disabling Ci, while hiding that from the user, but the extent of changing mui files to "customize" the Ui, can go much further (and would not requere the machine to be 'safeboot disabled') as this poc do.
 Well, as i have witness, this may be absolute, as there is an easyier work-around.<br> 
 while Code Integrity (S.T CI (ci.dll)) was introduced as far back from vista, it is Only a Security feature That Can be bypassed by simply running: <br>
 bcdedit /set testsigning on<br>
