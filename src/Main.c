@@ -1,8 +1,4 @@
 
-/*
-	Native Api Support
-*/
-
 
 #include "def.h"
 #include "Nas.h"
