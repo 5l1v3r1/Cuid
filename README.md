@@ -14,9 +14,25 @@ but guess what, you got a big sign infront of the user saying (TEST MODE), well 
 So what a great thing could be for a malware author to just remove this sign (i am aware that there are different ways to disable Ci w/o that but that requeres some pg manipulation, and i will focus on this finding alone in this repo.).<br>
 # Well looks like MS got it all figured Out... (mmmmm)  not really.
 like almost everything at the windows os it all comes down to a few veriables sitting at some exe (Ntos) or dll memory, or evan far better a simple text file (Mui).<br>
-looking at shell32.dll.mui (well shell 32 hold almost every aspect of the user it is the "shell" wrapper) with <html><a href="http://www.angusj.com/resourcehacker/">resHacker</a></html>
+looking at shell32.dll.mui (well shell 32 hold almost every aspect of the users interface, it is the "shell" wrapper, so this is the first place i have go to in \system32\en-US\...) with <html><a href="http://www.angusj.com/resourcehacker/">resHacker</a></html>
 ![](PoC/ResHacker.png)
-you can see many interesting things (you can with notepad also...),
-guess what.... "TestMode" simply sits there as a veriable. well very easy if test signing is on then when shell32.dll is initialized it goes to table 2069 (not really depand on the vertions but this do not make any differance as you will see further on).
-# Well what will heapen if we simplly delete "TestMode"?????
-well the answer is nothing, well (besides the fact that the sign is now off), but hey guess what
+you can see many interesting variables (you can with notepad also...), guess what.... "TestMode" simply sits there as a veriable. well, very easy, if test signing is on then when shell32.dll is initialized it goes to table 2069 (not really depand on the versions but this do not make any differance as you will see further on). 
+# Well what will heapen if we simply delete "TestMode"?????
+well the answer is nothing, well (besides the fact that the sign is now off), but hey guess what, in System32\SysWow64\\..\\your leng...<br>
+there are ton's of other interesting dll.mui files like Taskmgr.exe.mui ...  UserDataService.dll.mui and the list goe's on and on...<br>
+enough talking, you may think, well but the shell is using that mui file to diplay data, well it goe's as far as a logout to make it use your modified .mui file (you can modify it and wait to the user logoff programaticly) and it will be initialized again with your 'payload' i cant evan call it that....<br>
+So i have wrote a simple C program that illustrates hiding this Very Critical Change to the system.. but you can experiment on yourself and make other changes.
+i myself, adjusted shell32.dll.mui & basebrd.dll.mui and coded them into Binary (inside the 'Build' zip directory as def.h (its a 1.5 mb file so i have zipped it for you)), and implemented a very simple 'mui exchanger' as a proof of consept it will requere the user to log off (or a reboot by the program (cuz i enable the testSigning in this poc)), but afaik if per say TaskMgr is not working at the givven moment then you can simplly change the mui, w/o any user need to log off or restart the pc, as i sayed there is much potential at making changes to this simple formated file's as far as dfir, and malware usage.
+
+you can compile my code and test it (its win32 so youll need to adjust to your operating system (sysnative vs system32)) but there is not much else to be done. Or if you do not trust me simplly delete the "TestMode" or any other var you dont want the user to see (can be warning's or what ever the fk you want). and run it by your self. you can evan experiment more.
+
+well.. to build from my source you will need to download the build part, (i have attached a 2 modified .mui file's if you dont trust my binarys.....), or modify them your self (id recommend with reshaker cuz simply deleting the value by hand will curropt the file format leading to a system fkUp,).<br>
+# Important!!!
+if you do compile my source and run it i will recomand to back up your \windows\branding\basebrd\en-US\basebrd.dll.mui & \Sysnative\en-Us\shell32.dll.mui before running this, so you can recover the system if anything go's wrong (i have tested this only at win 10 from early builds up to 16232..) but you can never know...
+
+# Well here is my PoC, as you can see im obviously running w/o Ci, but there is no sign to it....
+![](PoC/Poc.JPG)
+# Muahahaha Enjoy!!
+#
+
+
