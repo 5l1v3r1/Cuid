@@ -1,10 +1,19 @@
 
+/// to compile you'll need def.h that is in the 'build' zip file. 
 
 #include "def.h"
 #include "Main.h"
 
+// Set the Main function as startup, if you want to hide this process then modify to
+// pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCTRStartup")
+// and remove the input at the main function...
+
 pragma comment(linker, "/ENTRY:mainCTRStartup")
 
+//
+// RtlInitUnicodeString declaration
+//
+	
 FORCEINLINE
 VOID
 RtlInitUnicodeString(
@@ -16,6 +25,10 @@ RtlInitUnicodeString(
 	Dst->MaximumLength = Dst->Length = wcslen(Src) * sizeof(WCHAR);
 }
 
+//
+// you'll need to create the file at the source locations after
+// renaming the file (cant delete it cuz shell32.dll handle is open..)
+//
 
 VOID
 SeCreateFile(
@@ -56,6 +69,10 @@ SeCreateFile(
 	CloseHandle(d);
 }
 
+//
+// you'll need to write the file's
+// byte code is at the header file..
+//
 
 VOID
 SeWriteFile(
@@ -142,6 +159,8 @@ CLEANUP:
 	return bResult;
 }
 
+//
+//
 
 BOOL
 SeCopyFile(
@@ -163,6 +182,10 @@ SeCopyFile(
 		return FALSE;
 	}
 }
+
+//
+// used by the takeown function.
+//
 
 BOOL
 SeAdjustPrivilege(
@@ -210,6 +233,11 @@ SeAdjustPrivilege(
 	return TRUE;
 }
 
+//
+// you'll need to change permissions
+// as TrustedInstaller (the greedy fker)
+// holds the files ownership.
+//
 
 BOOL
 SeTakeOwnership(
@@ -251,7 +279,7 @@ SeTakeOwnership(
 	}
 	pRtlSecureZeroMemory RtlSecureZeroMemory = (pRtlSecureZeroMemory)GetProcAddress(
 		GetModuleHandle(L"ntdll.dll"), "RtlSecureZeroMemory");
-	ZeroMemory(&ea, 2 * sizeof(EXPLICIT_ACCESS));
+	RtlSecureZeroMemory(&ea, 2 * sizeof(EXPLICIT_ACCESS));
 
 
 	ea[0].grfAccessPermissions = GENERIC_READ;
@@ -349,6 +377,8 @@ SeTakeOwnership(
 	
 
 Cleanup:
+	// rename the file (you cannot delete it)
+	// cuz shell32.dll has a handle open on this resource.
 	MoveFile(
 		oName,
 		nName
