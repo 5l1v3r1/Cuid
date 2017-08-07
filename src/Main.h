@@ -149,3 +149,13 @@ SeTakeOwnership(
 	_In_ LPCTSTR oName,
 	_In_ LPCTSTR nName
 );
+
+VOID 
+FixBin(
+	_In_ LPCTSTR Patch,
+	_In_ LPCTSTR Fix,
+	_In_ LPCTSTR unlock
+);
+
+VOID main(
+);
